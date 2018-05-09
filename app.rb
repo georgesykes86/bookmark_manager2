@@ -8,13 +8,6 @@ require 'uri'
    enable :sessions
    register Sinatra::Flash
 
-   helpers do
-
-      def valid_url?(url)
-         !!(url =~ /\A#{URI::regexp}\z/)
-      end
-
-   end
 
    get '/' do
      @bookmarks = Bookmark.all
@@ -22,12 +15,7 @@ require 'uri'
    end
 
    post '/add' do
-     url = params[:url]
-     if valid_url?(url)
-       Bookmark.add(params[:url])
-     else
-       flash[:notice] = "Not a valid url"
-     end
+     flash[:notice] = "Not a valid url" unless Bookmark.add(params[:url])
      redirect '/'
    end
 

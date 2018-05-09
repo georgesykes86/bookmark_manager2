@@ -21,6 +21,11 @@ describe Bookmark do
       described_class.add('http://thoughtbot.com')
       expect(described_class.all).to include 'http://thoughtbot.com'
     end
+
+    it 'does not add an incorrect url' do
+      described_class.add('not a valid url')
+      expect(described_class.all).not_to include 'not a valid url'
+    end
   end
 
 end
