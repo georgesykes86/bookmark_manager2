@@ -9,4 +9,9 @@ require_relative 'lib/bookmark'
      erb(:index)
    end
 
+   post '/add' do
+     Bookmark.add(params[:url])
+     redirect '/'
+   end
+
  end

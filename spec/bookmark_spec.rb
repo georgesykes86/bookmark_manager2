@@ -16,4 +16,11 @@ describe Bookmark do
     expect(described_class.all).to eq expected_bookmarks
   end
 
+  context '#add' do
+    it 'adds a url to the array of bookmarks' do
+      described_class.add('http://thoughtbot.com')
+      expect(described_class.all).to include 'http://thoughtbot.com'
+    end
+  end
+
 end
