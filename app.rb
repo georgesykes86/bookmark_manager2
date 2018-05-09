@@ -1,12 +1,11 @@
 require 'sinatra'
 require 'sinatra/base'
-require_relative 'lib/bookmark_factory'
+require_relative 'lib/bookmark'
 
  class BookmarkManager < Sinatra::Base
 
    get '/' do
-     bf = BookmarkFactory.new
-     @bookmarks = bf.all
+     @bookmarks = Bookmark.all
      erb(:index)
    end
 
