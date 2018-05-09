@@ -2,7 +2,6 @@ require 'sinatra'
 require 'sinatra/base'
 require_relative 'lib/bookmark'
 require 'sinatra/flash'
-require 'uri'
 
  class BookmarkManager < Sinatra::Base
    enable :sessions
