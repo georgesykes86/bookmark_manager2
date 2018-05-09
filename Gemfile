@@ -9,6 +9,7 @@ ruby "2.5.0"
 gem "sinatra"
 gem "rack"
 gem "pg"
+gem "sinatra-flash"
 
 group :development, :test do
   gem 'capybara'
