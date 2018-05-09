@@ -1,7 +1,7 @@
 class DatabaseConnection
 
   def self.query(query)
-    if ENV['ENVIRONMENT'] == 'test'
+    if ENV['RACK_ENV'] == 'test'
       con = PG.connect :dbname => 'bookmark_manager_test'
     else
       con = PG.connect :dbname => 'bookmark_manager'
