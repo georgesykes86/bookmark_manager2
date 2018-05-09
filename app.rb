@@ -6,7 +6,7 @@ require_relative 'lib/bookmark_factory'
 
    get '/' do
      bf = BookmarkFactory.new
-     @bookmarks = bf.bookmarks
+     @bookmarks = bf.all
      erb(:index)
    end
 
