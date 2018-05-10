@@ -1,0 +1,7 @@
+<form action="/updated" method="post">
+  <% session[:selection].each do |bookmark| %>
+  <input type="text" class="url" name='<%= bookmark.id %>_url' value='<%= bookmark.url %>'>
+  <input type="text" class="title" name="<%= bookmark.id %>_title" value="<%= bookmark.title %>">
+  <% end %>
+  <input type="submit" value="Sumbit">
+</form>

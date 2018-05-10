@@ -49,13 +49,34 @@ describe Bookmark do
   end
 
   describe '#delete' do
-
     it 'deletes a bookmark' do
       bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
       described_class.delete(bookmark.id)
       expect(described_class.all).to be_empty
     end
+  end
 
+
+  describe '#find' do
+    it 'finds bookmark by title' do
+      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
+      expect(described_class.find('thoughtbot')).to include bookmark
+    end
+  end
+
+  describe "#update" do
+    it 'updates bookmark by title' do
+      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
+      described_class.update(id: bookmark.id, title: 'Toughtbot')
+      expect(described_class.find('Toughtbot')).to include bookmark
+    end
+
+    it 'update bookmark by URL' do
+      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
+      described_class.update(id: bookmark.id, url: "http://thoughtbot.co.uk")
+      result = described_class.find('thoughtbot').first
+      expect(result.url).to eq "http://thoughtbot.co.uk"
+    end
   end
 
 

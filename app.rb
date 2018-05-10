@@ -23,4 +23,13 @@ require 'sinatra/flash'
      redirect '/'
    end
 
+   post '/update' do
+     session[:selection] = Bookmark.find(params[:update_title])
+     redirect '/update'
+   end
+
+   get '/update' do
+     erb(:update)
+   end
+
  end
