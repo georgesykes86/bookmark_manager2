@@ -1,12 +1,13 @@
 <h1>List of bookmarks</h1>
 <ul>
 <% @bookmarks.each do |bookmark| %>
-  <%= "<li>#{bookmark}</li>" %>
+  <li><a href= '<%= bookmark.url %>' ><%= bookmark.title %></a></li>
 <% end %>
 </ul>
 
 <form action='/add' method='post'>
   <input type='text' name='url'>
+  <input type='text' name='title'>
   <input type='submit' value='Add Bookmark'>
 </form>
 <%= flash[:notice] %>

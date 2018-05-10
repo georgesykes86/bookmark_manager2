@@ -1,30 +1,18 @@
 require 'bookmark'
 
 describe Bookmark do
-  it 'returns an array of bookmarks' do
-    expected_bookmarks = [
-       'http://makersacademy.com',
-       'http://destroyallsoftware.com',
-       'http://google.com'
-     ]
-
-     connection = PG.connect(dbname: 'bookmark_manager_test')
-     connection.exec("INSERT INTO bookmarks (url) VALUES('http://makersacademy.com');")
-     connection.exec("INSERT INTO bookmarks (url) VALUES('http://destroyallsoftware.com');")
-     connection.exec("INSERT INTO bookmarks (url) VALUES('http://google.com');")
-
-    expect(described_class.all).to eq expected_bookmarks
-  end
 
   context '#add' do
     it 'adds a url to the array of bookmarks' do
       described_class.add('http://thoughtbot.com', 'thoughtbot')
-      expect(described_class.all).to include 'http://thoughtbot.com'
+      result = described_class.all[0]
+      expect(result.url).to eq 'http://thoughtbot.com'
     end
 
     it 'does not add an incorrect url' do
       described_class.add('not a valid url')
-      expect(described_class.all).not_to include 'not a valid url'
+      result = described_class.all.any? { |bookmark| bookmark.url == 'not a valid url' }
+      expect(result).to be false
     end
 
     it 'returns a Bookmark object' do

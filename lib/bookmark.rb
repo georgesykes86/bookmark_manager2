@@ -10,7 +10,7 @@ class Bookmark
 
   def self.all
     result = DatabaseConnection.query("SELECT * FROM bookmarks")
-    result.map { |row| row['url'] }
+    result.map { |row| create(id: row['id'], title: row['title'], url: row['url']) }
   end
 
   def self.add(url, title = nil)

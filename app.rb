@@ -14,7 +14,7 @@ require 'sinatra/flash'
    end
 
    post '/add' do
-     flash[:notice] = "Not a valid url" unless Bookmark.add(params[:url])
+     flash[:notice] = "Not a valid url" unless Bookmark.add(params[:url], params[:title])
      redirect '/'
    end
 
