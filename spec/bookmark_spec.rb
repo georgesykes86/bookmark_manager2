@@ -34,4 +34,19 @@ describe Bookmark do
     end
   end
 
+  describe '#==' do
+    it 'returns true for matchin ids' do
+        bookmark1 = Bookmark.new(id: 1, url: 'hhtp://google.com', title: 'Google')
+        bookmark2 = Bookmark.new(id: 1, url: 'hhtp://gogle.com', title: 'Gogle')
+        expect(bookmark1).to eq bookmark2
+    end
+
+    it 'returns false for different ids' do
+      bookmark1 = Bookmark.new(id: 1, url: 'hhtp://google.com', title: 'Google')
+      bookmark2 = Bookmark.new(id: 2, url: 'hhtp://gogle.com', title: 'Gogle')
+      expect(bookmark1).not_to eq bookmark2
+    end
+  end
+
+
 end
