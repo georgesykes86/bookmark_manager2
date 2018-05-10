@@ -48,5 +48,15 @@ describe Bookmark do
     end
   end
 
+  describe '#delete' do
+
+    it 'deletes a bookmark' do
+      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
+      described_class.delete(bookmark.id)
+      expect(described_class.all).to be_empty
+    end
+
+  end
+
 
 end

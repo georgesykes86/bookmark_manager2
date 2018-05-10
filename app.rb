@@ -18,4 +18,9 @@ require 'sinatra/flash'
      redirect '/'
    end
 
+   post '/delete/:id' do
+     Bookmark.delete(params[:id].to_i)
+     redirect '/'
+   end
+
  end
