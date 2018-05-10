@@ -6,8 +6,6 @@ class Bookmark
 
   def self.all
     result = DatabaseConnection.query("SELECT * FROM bookmarks")
-    result.each { |tuple| p tuple }
-    result.each_row { |row| p row }
     result.map { |row| row['url'] }
   end
 
