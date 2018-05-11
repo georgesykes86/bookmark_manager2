@@ -35,13 +35,13 @@ describe DatabaseMapper do
 
 
   describe '#find_bookmark' do
-    it 'finds bookmark by title' do
-      title = 'thoughtbot'
-      find = "SELECT * FROM bookmarks WHERE title='#{title}'"
+    it 'finds bookmark by id' do
+      id = '2'
+      find = "SELECT * FROM bookmarks WHERE id='#{id}'"
       allow(connection).to receive(:query).with(find)
         .and_return(["first item"])
       allow(bookmark_class).to receive(:new).with(anything)
-      db_mapper.find_bookmark(title)
+      db_mapper.find_bookmark(id)
       expect(bookmark_class).to have_received(:new).with("first item")
       expect(connection).to have_received(:query).with(find)
     end

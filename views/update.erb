@@ -5,11 +5,10 @@
     <title>Update</title>
   </head>
   <body>
-    <form action="/updated" method="post">
-      <% session[:selection].each do |bookmark| %>
-      <input type="text" id="url" name='<%= bookmark.id %>_url' value='<%= bookmark.url %>'>
-      <input type="text" id="title" name="<%= bookmark.id %>_title" value="<%= bookmark.title %>">
-      <% end %>
+    <form action="/bookmarks/<%= @bookmark.id %>" method="post">
+      <input type="hidden" name="_method" value="PATCH">
+      <input type="text" name="url" value='<%= @bookmark.url %>'>
+      <input type="text" name="title" value="<%= @bookmark.title %>">
       <input type="submit" value="Submit">
     </form>
   </body>

@@ -24,9 +24,9 @@ class DatabaseMapper
     @db_connection.query("DELETE FROM #{table_name} WHERE id=#{id}")
   end
 
-  def find_bookmark(title)
-    result = @db_connection.query("SELECT * FROM bookmarks WHERE title='#{title}'")
-    result.map { |tuple| @bookmark_class.new(tuple) }
+  def find_bookmark(id)
+    result = @db_connection.query("SELECT * FROM bookmarks WHERE id='#{id}'")
+    result.map { |tuple| @bookmark_class.new(tuple) }.first
   end
 
   def update_bookmark(id, title , url)

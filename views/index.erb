@@ -6,10 +6,13 @@
     <input type="hidden" name='_method' value='DELETE' />
     <input type='submit' value='Delete'>
   </form>
+  <form action="/bookmarks/<%= bookmark.id %>/edit" method="post">
+    <input type="submit" value="Update">
+  </form>
 <% end %>
 </ul>
 
-<form action='/add' method='post'>
+<form action='/bookmarks' method='post'>
   <label for="url">URL</label>
   <input type='text' name='url'>
   <label for="title">Title</label>
@@ -17,9 +20,3 @@
   <input type='submit' value='Add Bookmark'>
 </form>
 <%= flash[:notice] %>
-
-<form action="/update" method="post">
-  <label for="update_title">Title</label>
-  <input type="text" name='update_title'>
-  <input type="submit" value="Update">
-</form>

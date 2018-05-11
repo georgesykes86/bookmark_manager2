@@ -13,24 +13,8 @@ require 'sinatra/flash'
      register Sinatra::Flash
    end
 
-   helpers do
-
-     def update_params_handler(params)
-       update_hash = Hash.new
-       params.each do |key, value|
-         id, field = key.split("_")[0].to_i, key.split("_")[1]
-         update_hash[id] ||= {}
-         update_hash[id][field.to_sym] = value
-       end
-       update_hash
-     end
-
-     def update_all(bookmarks)
-       bookmarks.each do |id, value_hash|
-         @@orm.update_bookmark(id, value_hash[:title], value_hash[:url], )
-       end
-     end
-
+   get '/' do
+     redirect '/bookmarks'
    end
 
    get '/bookmarks' do
@@ -48,18 +32,18 @@ require 'sinatra/flash'
      redirect '/bookmarks'
    end
 
-   post '/update' do
-     session[:selection] = @@orm.find_bookmark(params[:update_title])
-     redirect '/update'
+   post '/bookmarks/:id/edit' do
+     redirect  '/bookmarks/' + params[:id] + '/edit'
    end
 
-   get '/update' do
+   get '/bookmarks/:id/edit' do
+      @bookmark = @@orm.find_bookmark(params[:id])
      erb(:update)
    end
 
-   post '/updated' do
-     update_all(update_params_handler(params))
-     redirect '/'
+   patch '/bookmarks/:id' do
+     @@orm.update_bookmark(params[:id],params[:title],params[:url])
+     redirect '/bookmarks'
    end
 
  end
