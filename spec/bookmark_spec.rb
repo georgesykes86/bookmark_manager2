@@ -2,82 +2,26 @@ require 'bookmark'
 
 describe Bookmark do
 
-  context '#add' do
-    it 'adds a url to the array of bookmarks' do
-      described_class.add('http://thoughtbot.com', 'thoughtbot')
-      result = described_class.all[0]
-      expect(result.url).to eq 'http://thoughtbot.com'
-    end
+  let(:bookmark1) { Bookmark.new('id' => 1, 'url' => 'hhtp://google.com', 'title' => 'Google') }
+  let(:bookmark2) { Bookmark.new('id' => 1, 'url' => 'hhtp://gogle.com', 'title' => 'Gogle') }
+  let(:bookmark3) { Bookmark.new('id' => 2, 'url' => 'hhtp://gogle.com', 'title' => 'Gogle') }
 
-    it 'does not add an incorrect url' do
-      described_class.add('not a valid url')
-      result = described_class.all.any? { |bookmark| bookmark.url == 'not a valid url' }
-      expect(result).to be false
-    end
-
-    it 'returns a Bookmark object' do
-      result = described_class.add('http://thoughtbot.com', 'thoughtbot')
-      expect(result.url).to eq "http://thoughtbot.com"
-    end
-  end
-
-  describe '#self.create' do
-    let(:bookmark) { described_class.create(id: 2, url: 'http://bbc.co.uk', title: 'bbc') }
-    it 'creates an instance of Bookmark' do
-      expect(bookmark).to be_an_instance_of(described_class)
-    end
-
-    it 'gives the bookmark a title, url and an id' do
-      expect(bookmark.id).to eq 2
-      expect(bookmark.url).to eq "http://bbc.co.uk"
-      expect(bookmark.title).to eq "bbc"
+  describe '#initialise' do
+    it 'shows correct values' do
+      expect(bookmark1.id).to eq 1
+      expect(bookmark1.title).to eq 'Google'
+      expect(bookmark1.url).to eq 'hhtp://google.com'
     end
   end
 
   describe '#==' do
     it 'returns true for matchin ids' do
-        bookmark1 = Bookmark.new(id: 1, url: 'hhtp://google.com', title: 'Google')
-        bookmark2 = Bookmark.new(id: 1, url: 'hhtp://gogle.com', title: 'Gogle')
         expect(bookmark1).to eq bookmark2
     end
 
     it 'returns false for different ids' do
-      bookmark1 = Bookmark.new(id: 1, url: 'hhtp://google.com', title: 'Google')
-      bookmark2 = Bookmark.new(id: 2, url: 'hhtp://gogle.com', title: 'Gogle')
-      expect(bookmark1).not_to eq bookmark2
+      expect(bookmark1).not_to eq bookmark3
     end
   end
-
-  describe '#delete' do
-    it 'deletes a bookmark' do
-      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
-      described_class.delete(bookmark.id)
-      expect(described_class.all).to be_empty
-    end
-  end
-
-
-  describe '#find' do
-    it 'finds bookmark by title' do
-      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
-      expect(described_class.find('thoughtbot')).to include bookmark
-    end
-  end
-
-  describe "#update" do
-    it 'updates bookmark by title' do
-      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
-      described_class.update(id: bookmark.id, title: 'Toughtbot')
-      expect(described_class.find('Toughtbot')).to include bookmark
-    end
-
-    it 'update bookmark by URL' do
-      bookmark = described_class.add('http://thoughtbot.com', 'thoughtbot')
-      described_class.update(id: bookmark.id, url: "http://thoughtbot.co.uk")
-      result = described_class.find('thoughtbot').first
-      expect(result.url).to eq "http://thoughtbot.co.uk"
-    end
-  end
-
 
 end

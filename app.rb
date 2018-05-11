@@ -1,11 +1,16 @@
 require 'sinatra'
 require 'sinatra/base'
-require_relative 'lib/bookmark'
+require_relative './lib/bookmark'
+require_relative './lib/database_mapper'
 require 'sinatra/flash'
 
  class BookmarkManager < Sinatra::Base
    enable :sessions
    register Sinatra::Flash
+
+   configure do
+     @@orm = DatabaseMapper.new
+   end
 
    helpers do
 
@@ -21,29 +26,29 @@ require 'sinatra/flash'
 
      def update_all(bookmarks)
        bookmarks.each do |id, value_hash|
-         Bookmark.update(id: id, url: value_hash[:url], title: value_hash[:title])
+         @@orm.update_bookmark(id, value_hash[:title], value_hash[:url], )
        end
      end
 
    end
 
    get '/' do
-     @bookmarks = Bookmark.all
+     @bookmarks = @@orm.all(Bookmark, 'bookmarks')
      erb(:index)
    end
 
    post '/add' do
-     flash[:notice] = "Not a valid url" unless Bookmark.add(params[:url], params[:title])
+     flash[:notice] = "Not a valid url" unless @@orm.add_bookmark(params[:url], params[:title])
      redirect '/'
    end
 
    post '/delete/:id' do
-     Bookmark.delete(params[:id].to_i)
+     @@orm.delete(params[:id].to_i, 'bookmarks')
      redirect '/'
    end
 
    post '/update' do
-     session[:selection] = Bookmark.find(params[:update_title])
+     session[:selection] = @@orm.find_bookmark(params[:update_title])
      redirect '/update'
    end
 
