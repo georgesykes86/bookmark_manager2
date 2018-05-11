@@ -1,5 +1,6 @@
 require_relative './database_connection'
 require_relative './bookmark'
+require 'uri'
 
 class DatabaseMapper
 
@@ -36,7 +37,7 @@ class DatabaseMapper
   private
 
   def valid_url?(url)
-     !!(url =~ /\A#{URI::regexp}\z/)
+    !!(url =~ /\A#{URI::regexp}\z/)
   end
 
 end

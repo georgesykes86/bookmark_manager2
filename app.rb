@@ -5,11 +5,12 @@ require_relative './lib/database_mapper'
 require 'sinatra/flash'
 
  class BookmarkManager < Sinatra::Base
-   enable :sessions
-   register Sinatra::Flash
 
    configure do
+     use Rack::MethodOverride
      @@orm = DatabaseMapper.new
+     enable :sessions
+     register Sinatra::Flash
    end
 
    helpers do
@@ -32,19 +33,19 @@ require 'sinatra/flash'
 
    end
 
-   get '/' do
+   get '/bookmarks' do
      @bookmarks = @@orm.all(Bookmark, 'bookmarks')
      erb(:index)
    end
 
-   post '/add' do
+   post '/bookmarks' do
      flash[:notice] = "Not a valid url" unless @@orm.add_bookmark(params[:url], params[:title])
      redirect '/'
    end
 
-   post '/delete/:id' do
+   delete '/bookmarks/:id' do
      @@orm.delete(params[:id].to_i, 'bookmarks')
-     redirect '/'
+     redirect '/bookmarks'
    end
 
    post '/update' do
